@@ -2,7 +2,7 @@
 /* http://knockoutjs.com/documentation/custom-bindings.html */
 function MyModel() {
 
-this.mapOne = ko.observable({
+this.mapob = ko.observable({
         lat: ko.observable(40.74135),
         lng:ko.observable(-73.99802)
     });
