@@ -1,13 +1,23 @@
-<html>
-<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Neighbourhood Map</title>
+     
+</head>
+<body>   
+    <div data-bind=""> </div>
 
-<input data-bind="value: mapob().lat" />
-<input data-bind="value: mapob().lng" />
-   <script src="bower_components/jquery/jquery.js"></script>
-   <script src="bower_components/knockout/dist/knockout.js"></script>
-   <script src="js/models/model.js"></script>
-   <script async defer
-     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByGmOzk27pGJOB23bKr-B5TVg5H0DxuFQ&v=3&callback=MyModel">
+   
+   
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByGmOzk27pGJOB23bKr-B5TVg5H0DxuFQ&v=3&callback=ViewModel">
    </script>
+    <div id="map2Div" data-bind="style:{width:'600px',height:'300px'},map:mapTwo"></div>
+<input data-bind="value: mapTwo().lat" />
+<input data-bind="value: mapTwo().lng" />
+ <script src="bower_components/knockout/dist/knockout.js"></script>
+     <script src="js/models/model.js"></script>
+    
 </body>
 </html>
+   
