@@ -1,8 +1,6 @@
 
 /* http://knockoutjs.com/documentation/custom-bindings.html */
-$(document).ready(function () {   
-   ko.applyBindings(viewModel);
-});
+
 
 var markers = [];
 function MyViewModel() {
@@ -17,8 +15,16 @@ function MyViewModel() {
     
 }
 
+
+function ViewModel() {
+
+  console.log("initialise map");
+   ko.applyBindings(viewModel);
+} 
+
 ko.bindingHandlers.map = {
-            init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+            init: function (element, valueAccessor, allBindingsAccessor, MyViewModel) {
+              console.log("initialise binding");
                 var mapObj = ko.utils.unwrapObservable(valueAccessor());
                var latLng = new google.maps.LatLng(
                     ko.utils.unwrapObservable(mapObj.lat),
