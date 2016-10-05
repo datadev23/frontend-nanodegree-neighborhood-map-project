@@ -19,7 +19,7 @@ function MyViewModel() {
 function ViewModel() {
 
   console.log("initialise map");
-   ko.applyBindings(viewModel);
+   ko.applyBindings(MyViewModel);
 } 
 
 ko.bindingHandlers.map = {
