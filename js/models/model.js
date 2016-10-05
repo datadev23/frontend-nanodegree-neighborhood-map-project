@@ -30,7 +30,7 @@ ko.bindingHandlers.map = {
                     ko.utils.unwrapObservable(mapObj.lat),
                     ko.utils.unwrapObservable(mapObj.lng));
                 var mapOptions = { center: latLng,
-                                  zoom: 6, 
+                                  zoom: 12, 
                                   mapTypeId: google.maps.MapTypeId.ROADMAP};
                                   
                                           var locations = [
