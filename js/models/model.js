@@ -10,6 +10,15 @@ function MyViewModel() {
         lat: ko.observable(40.74135),
         lng:ko.observable(-73.99802)
     });
+
+    this.locations = [
+          {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
+          {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
+          {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759}},
+          {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}},
+          {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934}},
+          {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237}}
+        ];
     
   
     
@@ -19,6 +28,8 @@ function MyViewModel() {
 function ViewModel() {
 
   console.log("initialise map");
+
+
    ko.applyBindings(MyViewModel);
 } 
 
@@ -33,15 +44,9 @@ ko.bindingHandlers.map = {
                                   zoom: 12, 
                                   mapTypeId: google.maps.MapTypeId.ROADMAP};
                                   
-                                          var locations = [
-          {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
-          {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
-          {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759}},
-          {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}},
-          {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934}},
-          {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237}}
-        ];
-                
+                                          
+                 locations: ko.observableArray(locations);
+                  
                 mapObj.googleMap = new google.maps.Map(element, mapOptions);
                 
                 
