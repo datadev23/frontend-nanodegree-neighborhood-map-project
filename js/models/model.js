@@ -6,6 +6,8 @@ var markers = [];
 function MyViewModel() {
 
 
+
+
     this.mapTwo = ko.observable({
         lat: ko.observable(40.74135),
         lng:ko.observable(-73.99802)
@@ -21,8 +23,11 @@ function MyViewModel() {
         ];
     
   
-    
+  
 }
+
+
+
 
 
 function ViewModel() {
@@ -31,6 +36,7 @@ function ViewModel() {
 
 
    ko.applyBindings(MyViewModel);
+
 } 
 
 ko.bindingHandlers.map = {
@@ -45,8 +51,31 @@ ko.bindingHandlers.map = {
                                   mapTypeId: google.maps.MapTypeId.ROADMAP};
                                   
                                           
-                 locations: ko.observableArray(locations);
+                
+                
+
+                // 
+
+                 var viewModel = {
+                  query: ko.observable(''),
+                 locations: ko.observableArray(locations),
                   
+                   search: function(value) {
+                    viewModel.locations.removeAll();
+                    for(var x in locations) {
+                      if(locations[x].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+        viewModel.locations.push(locations[x]);
+      }
+                    }
+
+                   }
+
+
+                 };
+
+                // viewModel.query.subscribe(viewModel.search);
+                   
+
                 mapObj.googleMap = new google.maps.Map(element, mapOptions);
                 
                 
