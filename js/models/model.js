@@ -64,7 +64,8 @@ function initialise() {
 ko.bindingHandlers.map = {
             init: function (element, valueAccessor, allBindingsAccessor, MyViewModel) {
               console.log("initialise binding");
-      var bounds = new google.maps.LatLngBounds();      
+      var bounds = new google.maps.LatLngBounds();   
+      var largeInfowindow = new google.maps.InfoWindow();   
            // loop through the location points
            
            for(var i=0; i< locations.length; i++) {
@@ -74,11 +75,16 @@ ko.bindingHandlers.map = {
                 var marker = new google.maps.Marker({
                     map: map.googleMap,
                     position: position,
-                    title: "You Are Here",
+                    title: title,
                     draggable: true
                 });    
 
                 markers.push(marker); 
+                 marker.addListener('click', function() {
+        populateInfoWindow(this,largeInfowindow);
+       
+
+        });
 
             }
 
@@ -96,7 +102,18 @@ ko.bindingHandlers.map = {
 
 var Model = new MyModel();
 
-
+function populateInfoWindow(marker, infowindow) {
+        // Check to make sure the infowindow is not already opened on this marker.
+        if (infowindow.marker != marker) {
+          infowindow.marker = marker;
+          infowindow.setContent('<div>' + marker.title + '</div>');
+          infowindow.open(map, marker);
+          // Make sure the marker property is cleared if the infowindow is closed.
+          infowindow.addListener('closeclick',function(){
+            infowindow.setMarker(null);
+          });
+        }
+      }
 
 
 
