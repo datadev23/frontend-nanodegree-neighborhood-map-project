@@ -6,6 +6,8 @@ var markers = [];
 
 var model = [];
 
+var map;
+
  var locations = [
           {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
           {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
@@ -23,9 +25,7 @@ query: ko.observable(''),
    search: function(value) {
         viewModel.locations.removeAll();
         for(var x in locations) {
-          if(locations[x].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-            viewModel.locations.push(locations[x]);
-          }
+         console.log(x);
         }
       }
 
@@ -47,7 +47,13 @@ function initialise() {
 
   console.log("initialise map");
 
+   // Constructor creates a new map - only center and zoom are required.
+        map = new google.maps.Map(document.getElementById('map2Div'), {
+          center: {lat: 40.7413549, lng: -73.9980244},
+          zoom: 13
+        });
 
+  
    ko.applyBindings(MyModel);
 
 } 
@@ -58,37 +64,32 @@ function initialise() {
 ko.bindingHandlers.map = {
             init: function (element, valueAccessor, allBindingsAccessor, MyViewModel) {
               console.log("initialise binding");
-                var mapObj = ko.utils.unwrapObservable(valueAccessor());
-               var latLng = new google.maps.LatLng(
-                    ko.utils.unwrapObservable(mapObj.lat),
-                    ko.utils.unwrapObservable(mapObj.lng));
-                var mapOptions = { center: latLng,
-                                  zoom: 12, 
-                                  mapTypeId: google.maps.MapTypeId.ROADMAP};
-            
-                // viewModel.query.subscribe(viewModel.search);
-                   
-
-                mapObj.googleMap = new google.maps.Map(element, mapOptions);
-                
-                
+      var bounds = new google.maps.LatLngBounds();      
            // loop through the location points
            
            for(var i=0; i< locations.length; i++) {
            var position = (locations[i].location);
            var title = (locations[i].title);
-                mapObj.marker = new google.maps.Marker({
-                    map: mapObj.googleMap,
+           console.log(locations[i].title);
+                var marker = new google.maps.Marker({
+                    map: map.googleMap,
                     position: position,
                     title: "You Are Here",
                     draggable: true
-                });     
+                });    
+
+                markers.push(marker); 
 
             }
 
-                google.maps.event.addListener(mapObj.marker, 'dragend', mapObj.mymaker);
-                
-                $("#" + element.getAttribute("id")).data("mapObj",mapObj);
+            for(var i=0; i < markers.length; i++) {
+
+            markers[i].setMap(map);
+            bounds.extend(markers[i].position);
+
+            }
+
+               
             }
         };
 
