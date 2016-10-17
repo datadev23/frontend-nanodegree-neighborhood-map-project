@@ -20,7 +20,7 @@ var map;
 var viewModel = {  
 
 locations: ko.observableArray(locations),
-//query: ko.observable(''),
+query: ko.observable(''),
 
    search: function(value) {
         viewModel.locations.removeAll();
