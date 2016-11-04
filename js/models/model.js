@@ -54,7 +54,10 @@ function initialise() {
         });
 
   
-   ko.applyBindings(MyModel);
+
+   ko.applyBindings(viewModel);
+
+ 
 
 } 
 
