@@ -26,6 +26,7 @@ query: ko.observable(''),
         viewModel.locations.removeAll();
         for(var x in locations) {
          console.log(x);
+         console.log("Enter information");
         }
       }
 
@@ -54,10 +55,11 @@ function initialise() {
         });
 
   
-
+MyModel();
    ko.applyBindings(viewModel);
 
- 
+
+
 
 } 
 
