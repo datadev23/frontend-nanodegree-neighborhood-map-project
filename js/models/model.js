@@ -27,10 +27,15 @@ query: ko.observable(''),
         for(var x in locations) {
          console.log(x);
          console.log("Enter information");
+         if(locations[x].name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+        viewModel.locations.push(locations[x]);
+      }
         }
       }
 
 }
+
+viewModel.query.subscribe(viewModel.search);
 
 // this is my model for knockout
 function MyModel() {
