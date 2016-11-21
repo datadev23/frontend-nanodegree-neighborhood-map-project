@@ -9,7 +9,7 @@
      <input placeholder="Search…" type="search" name="q" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
     <div data-bind=""> </div>
 
-    <ul data-bind="template: {name:'location', foreach:locations}"></ul>
+    <ul data-bind="template: {name:'location', foreach:filteredLocations}"></ul>
 
 
 <script type="text/html" id="location">

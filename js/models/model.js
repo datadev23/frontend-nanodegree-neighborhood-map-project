@@ -21,7 +21,7 @@ var viewModel = {
 
 locations: ko.observableArray(locations),
 query: ko.observable(''),
-
+/*
    search: function(value) {
         viewModel.locations.removeAll();
         for(var x in locations) {
@@ -32,10 +32,27 @@ query: ko.observable(''),
           }
         }
       }
-
+*/
 };
 
-viewModel.query.subscribe(viewModel.search);
+//viewModel.query.subscribe(viewModel.search);
+
+// filter function
+
+viewModel.filteredLocations = ko.computed(function() {
+    var filter = this.query().toLowerCase();
+    if (!filter) {
+        // TODO: add loop to set all marker properties to visible **************
+        return this.locations();
+    } else {
+        return ko.utils.arrayFilter(this.locations(), function(location) {
+            console.log(location);
+            var match = location.title.toLowerCase().indexOf(filter.toLowerCase()) >= 0;
+            return match;
+           
+        });
+    }
+}, viewModel);
 
 // this is my model for knockout
 function MyModel() {
