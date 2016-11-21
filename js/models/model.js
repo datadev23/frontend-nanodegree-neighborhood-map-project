@@ -48,6 +48,7 @@ viewModel.filteredLocations = ko.computed(function() {
         return ko.utils.arrayFilter(this.locations(), function(location) {
             console.log(location);
             var match = location.title.toLowerCase().indexOf(filter.toLowerCase()) >= 0;
+            location.marker.setVisible(match);
             return match;
            
         });
@@ -100,7 +101,7 @@ ko.bindingHandlers.map = {
            var title = (locations[i].title);
            console.log(locations[i].title);
                 var marker = new google.maps.Marker({
-                    map: map.googleMap,
+                    map: map,
                     position: position,
                     title: title,
                     draggable: true
@@ -112,6 +113,7 @@ ko.bindingHandlers.map = {
        
 
         });
+                 locations[i].marker = marker;
 
             }
 
