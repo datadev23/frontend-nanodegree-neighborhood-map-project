@@ -21,18 +21,7 @@ var viewModel = {
 
 locations: ko.observableArray(locations),
 query: ko.observable(''),
-/*
-   search: function(value) {
-        viewModel.locations.removeAll();
-        for(var x in locations) {
-       //  console.log(x);
-        // console.log("Enter information");
-         if(locations[x].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-        viewModel.locations.push(location[x]);
-          }
-        }
-      }
-*/
+
 };
 
 //viewModel.query.subscribe(viewModel.search);
