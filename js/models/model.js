@@ -24,6 +24,49 @@ query: ko.observable(''),
 
 };
 
+$.ajax({
+    url: "https://api.foursquare.com/v2/venues/search?client_id=KGJSO3R02HH124IYCUAYMJESY0CVOOTDTWWDJKY5ZCVWSPIL&client_secret=HOYZXG51I1NISLFXH5HMEXUFIQUCSLPKN2ZHNB3FROKLT2DS&v=20130815&ll=40.7713024,-73.9632393&query=sushi",
+ 
+    // The name of the callback parameter, as specified by Media Wiki
+   // jsonp: "callback",
+ 
+    // Tell jQuery we're expecting JSONP
+    dataType: "jsonp",
+ 
+   
+ 
+    // Work with the response
+    success: function( response ) {
+    alert("successful query");
+    var i = 1;
+
+
+    for (var prop in response)
+    {
+      alert(prop); 
+    }
+
+     
+
+
+   $.each(response,function(i, item) {
+   /* for(int venue = 1; i < item.length; venue++) {
+      console.log(venue);
+    }*/
+    console.log(item['venues']);
+
+    if(i === 0) {
+      return true;
+    }
+      });  
+    }
+});
+
+// get the data from the textbox
+
+
+
+//alert(location);
 //viewModel.query.subscribe(viewModel.search);
 
 // filter function
@@ -35,7 +78,12 @@ viewModel.filteredLocations = ko.computed(function() {
         return this.locations();
     } else {
         return ko.utils.arrayFilter(this.locations(), function(location) {
-            console.log(location);
+            console.log("current location outside wiki " + location.title);
+         // 
+       ajaxwiki(location.title);
+        
+
+
             var match = location.title.toLowerCase().indexOf(filter.toLowerCase()) >= 0;
             location.marker.setVisible(match);
             return match;
@@ -54,6 +102,8 @@ function MyModel() {
 
   
 }
+
+
 
 // intitialise function which initialises the binding for MyViewModel
 function initialise() {
@@ -78,17 +128,21 @@ MyModel();
 
 
 
+
+
 ko.bindingHandlers.map = {
             init: function (element, valueAccessor, allBindingsAccessor, MyViewModel) {
               console.log("initialise binding");
+ 
       var bounds = new google.maps.LatLngBounds();   
       var largeInfowindow = new google.maps.InfoWindow();   
            // loop through the location points
-           
+          // var street= $("input:search[id$='mysearch']").val();
+         
            for(var i=0; i< locations.length; i++) {
            var position = (locations[i].location);
            var title = (locations[i].title);
-           console.log(locations[i].title);
+         //  console.log(locations[i].title);
                 var marker = new google.maps.Marker({
                     map: map,
                     position: position,
