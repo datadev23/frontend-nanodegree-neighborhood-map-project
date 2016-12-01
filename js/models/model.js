@@ -38,27 +38,13 @@ $.ajax({
     // Work with the response
     success: function( response ) {
     alert("successful query");
+    var length = response['response']['venues'];
     var i = 1;
-
-
-    for (var prop in response)
-    {
-      alert(prop); 
-    }
-
-     
-
-
-   $.each(response,function(i, item) {
-   /* for(int venue = 1; i < item.length; venue++) {
-      console.log(venue);
-    }*/
-    console.log(item['venues']);
-
-    if(i === 0) {
-      return true;
-    }
-      });  
+   for (i =0; i < length.length; i++) {
+    console.log(response['response']['venues'][i].name);
+   }
+   
+  
     }
 });
 
@@ -80,10 +66,8 @@ viewModel.filteredLocations = ko.computed(function() {
         return ko.utils.arrayFilter(this.locations(), function(location) {
             console.log("current location outside wiki " + location.title);
          // 
-       ajaxwiki(location.title);
+      
         
-
-
             var match = location.title.toLowerCase().indexOf(filter.toLowerCase()) >= 0;
             location.marker.setVisible(match);
             return match;
@@ -119,16 +103,7 @@ function initialise() {
   
 MyModel();
    ko.applyBindings(viewModel);
-
-
-
-
 } 
-
-
-
-
-
 
 ko.bindingHandlers.map = {
             init: function (element, valueAccessor, allBindingsAccessor, MyViewModel) {
