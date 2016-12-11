@@ -4,6 +4,8 @@
 
 var markers = [];
 
+var foodmarkers = [];
+
 var model = [];
 
 var map;
@@ -23,30 +25,8 @@ locations: ko.observableArray(locations),
 query: ko.observable(''),
 
 };
+console.log(locations);
 
-$.ajax({
-    url: "https://api.foursquare.com/v2/venues/search?client_id=KGJSO3R02HH124IYCUAYMJESY0CVOOTDTWWDJKY5ZCVWSPIL&client_secret=HOYZXG51I1NISLFXH5HMEXUFIQUCSLPKN2ZHNB3FROKLT2DS&v=20130815&ll=40.7713024,-73.9632393&query=sushi",
- 
-    // The name of the callback parameter, as specified by Media Wiki
-   // jsonp: "callback",
- 
-    // Tell jQuery we're expecting JSONP
-    dataType: "jsonp",
- 
-   
- 
-    // Work with the response
-    success: function( response ) {
-    alert("successful query");
-    var length = response['response']['venues'];
-    var i = 1;
-   for (i =0; i < length.length; i++) {
-    console.log(response['response']['venues'][i].name);
-   }
-   
-  
-    }
-});
 
 // get the data from the textbox
 
@@ -64,7 +44,35 @@ viewModel.filteredLocations = ko.computed(function() {
         return this.locations();
     } else {
         return ko.utils.arrayFilter(this.locations(), function(location) {
-            console.log("current location outside wiki " + location.title);
+            console.log("current location outside foursquare lat " + location.location.lat);
+                       console.log("current location outside foursquare lng " + location.location.lng);
+
+                       // add the lat long from the users input and pass it to the foursquare api
+ var local = location.location.lng + "," + location.location;
+ console.log(local);
+            $.ajax({
+    url: "https://api.foursquare.com/v2/venues/search?client_id=KGJSO3R02HH124IYCUAYMJESY0CVOOTDTWWDJKY5ZCVWSPIL&client_secret=HOYZXG51I1NISLFXH5HMEXUFIQUCSLPKN2ZHNB3FROKLT2DS&v=20130815&ll=" + local +"&query=sushi",
+ 
+    // The name of the callback parameter, as specified by Media Wiki
+   // jsonp: "callback",
+ 
+    // Tell jQuery we're expecting JSONP
+    dataType: "jsonp",
+ 
+   
+ 
+    // Work with the response
+    success: function( response ) {
+   // alert("successful query");
+    var length = response['response']['venues'];
+    var i = 1;
+   for (i =0; i < length.length; i++) {
+    console.log(response['response']['venues'][i].name);
+   }
+   
+  
+    }
+});
          // 
       
         
@@ -75,6 +83,8 @@ viewModel.filteredLocations = ko.computed(function() {
         });
     }
 }, viewModel);
+
+
 
 // this is my model for knockout
 function MyModel() {
