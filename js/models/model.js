@@ -12,6 +12,8 @@ var model = [];
 
 var map;
 
+var foodmarker;
+
  var locations = [
           {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
           {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
@@ -41,6 +43,33 @@ query: ko.observable(''),
 
 //alert(location);
 //viewModel.query.subscribe(viewModel.search);
+
+foodmarker = function() {
+    
+     for (i =0; i < length.length; i++) {
+    console.log(i);
+
+    var lat = parseFloat(response['response']['venues'][i].location.lat);
+    var lng = parseFloat(response['response']['venues'][i].location.lng);
+
+    //alert(lat + " " + lng + " (types: " + (typeof lat) + ", " + (typeof lng) + ")")
+    //console.log(response['response']['venues'][i].location.lng);
+   // console.log(response['response']['venues'][i].location.lat);
+    foodcoordinate.push({'lat': lat, 'lng' : lng});
+
+       foodmarker = new google.maps.Marker({
+                    map: map,
+                    position: foodcoordinate,
+                    title: title,
+                     icon: pinSymbol("#FFF"),
+                    draggable: true
+                }); 
+
+
+   }
+
+
+}
 
 // filter function
  var showlist = true;
@@ -72,25 +101,15 @@ var local = location.location.lat + "," + location.location.lng;
     // Work with the response
     success: function( response ) {
    // alert("successful query");
-    var length = response['response']['venues'];
-    console.log(length);
-    var i = 1;
+   
  
 
    // alert(showlist);
-   for (i =0; i < length.length; i++) {
-    console.log(i);
-    var lat = parseFloat(response['response']['venues'][i].location.lat);
-    var lng = parseFloat(response['response']['venues'][i].location.lng);
-
-    //alert(lat + " " + lng + " (types: " + (typeof lat) + ", " + (typeof lng) + ")")
-    //console.log(response['response']['venues'][i].location.lng);
-   // console.log(response['response']['venues'][i].location.lat);
-    foodcoordinate.push({'lat': lat, 'lng' : lng})
-
-
-   }
-
+// foodmaker
+ var length = response['response']['venues'];
+    console.log(length);
+    var i = 1;
+foodmarker(length);
 
    
   
@@ -172,13 +191,7 @@ ko.bindingHandlers.map = {
                     draggable: true
                 });    
  //console.log("my responses" + response['response']['venues'][4].location.lat);
-                  var foodmarker = new google.maps.Marker({
-                    map: map,
-                    position: foodcoordinate,
-                    title: title,
-                     icon: pinSymbol("#FFF"),
-                    draggable: true
-                });  
+                
 
                 markers.push(marker); 
                 foodmarkers.push(foodmarker);
