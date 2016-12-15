@@ -6,6 +6,8 @@ var markers = [];
 
 var foodmarkers = [];
 
+var foodcoordinate = [];
+
 var model = [];
 
 var map;
@@ -19,13 +21,18 @@ var map;
           {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237}}
         ];
 
+var food = {
+
+
+}
+
 var viewModel = {  
 
 locations: ko.observableArray(locations),
 query: ko.observable(''),
 
 };
-console.log(locations);
+//console.log(locations);
 
 
 // get the data from the textbox
@@ -36,7 +43,7 @@ console.log(locations);
 //viewModel.query.subscribe(viewModel.search);
 
 // filter function
-
+ var showlist = true;
 viewModel.filteredLocations = ko.computed(function() {
     var filter = this.query().toLowerCase();
     if (!filter) {
@@ -44,12 +51,13 @@ viewModel.filteredLocations = ko.computed(function() {
         return this.locations();
     } else {
         return ko.utils.arrayFilter(this.locations(), function(location) {
-            console.log("current location outside foursquare lat " + location.location.lat);
-                       console.log("current location outside foursquare lng " + location.location.lng);
+          //  console.log("current location outside foursquare lat " + location.location.lat);
+           //            console.log("current location outside foursquare lng " + location.location.lng);
 
                        // add the lat long from the users input and pass it to the foursquare api
- var local = location.location.lng + "," + location.location;
- console.log(local);
+//alert(location);
+var local = location.location.lat + "," + location.location.lng;
+ //console.log(local);
             $.ajax({
     url: "https://api.foursquare.com/v2/venues/search?client_id=KGJSO3R02HH124IYCUAYMJESY0CVOOTDTWWDJKY5ZCVWSPIL&client_secret=HOYZXG51I1NISLFXH5HMEXUFIQUCSLPKN2ZHNB3FROKLT2DS&v=20130815&ll=" + local +"&query=sushi",
  
@@ -60,15 +68,30 @@ viewModel.filteredLocations = ko.computed(function() {
     dataType: "jsonp",
  
    
- 
+
     // Work with the response
     success: function( response ) {
    // alert("successful query");
     var length = response['response']['venues'];
+    console.log(length);
     var i = 1;
+ 
+
+   // alert(showlist);
    for (i =0; i < length.length; i++) {
-    console.log(response['response']['venues'][i].name);
+    console.log(i);
+    var lat = parseFloat(response['response']['venues'][i].location.lat);
+    var lng = parseFloat(response['response']['venues'][i].location.lng);
+
+    //alert(lat + " " + lng + " (types: " + (typeof lat) + ", " + (typeof lng) + ")")
+    //console.log(response['response']['venues'][i].location.lng);
+   // console.log(response['response']['venues'][i].location.lat);
+    foodcoordinate.push({'lat': lat, 'lng' : lng})
+
+
    }
+
+
    
   
     }
@@ -115,6 +138,18 @@ MyModel();
    ko.applyBindings(viewModel);
 } 
 
+
+function pinSymbol(color) {
+    return {
+        path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
+        fillColor: color,
+        fillOpacity: 1,
+        strokeColor: '#000',
+        strokeWeight: 2,
+        scale: 1,
+   };
+}
+
 ko.bindingHandlers.map = {
             init: function (element, valueAccessor, allBindingsAccessor, MyViewModel) {
               console.log("initialise binding");
@@ -128,14 +163,26 @@ ko.bindingHandlers.map = {
            var position = (locations[i].location);
            var title = (locations[i].title);
          //  console.log(locations[i].title);
+
+
                 var marker = new google.maps.Marker({
                     map: map,
                     position: position,
                     title: title,
                     draggable: true
                 });    
+ //console.log("my responses" + response['response']['venues'][4].location.lat);
+                  var foodmarker = new google.maps.Marker({
+                    map: map,
+                    position: foodcoordinate,
+                    title: title,
+                     icon: pinSymbol("#FFF"),
+                    draggable: true
+                });  
 
                 markers.push(marker); 
+                foodmarkers.push(foodmarker);
+
                  marker.addListener('click', function() {
         populateInfoWindow(this,largeInfowindow);
        
