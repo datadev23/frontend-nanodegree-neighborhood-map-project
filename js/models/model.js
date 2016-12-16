@@ -44,7 +44,7 @@ query: ko.observable(''),
 //alert(location);
 //viewModel.query.subscribe(viewModel.search);
 
-foodmarker = function() {
+foodmarker = function(length) {
     
      for (i =0; i < length.length; i++) {
     console.log(i);
