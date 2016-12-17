@@ -11,6 +11,7 @@ var foodcoordinate = [];
 var model = [];
 
 var map;
+var length;
 
 var foodmarker;
 
@@ -44,18 +45,24 @@ query: ko.observable(''),
 //alert(location);
 //viewModel.query.subscribe(viewModel.search);
 
-foodmarker = function(length) {
+foodmarkerdata = function(response) {
     
-     for (i =0; i < length.length; i++) {
+     for (i =0; i < length; i++) {
     console.log(i);
 
     var lat = parseFloat(response['response']['venues'][i].location.lat);
     var lng = parseFloat(response['response']['venues'][i].location.lng);
-
+    var title = (response['response']['venues'][i].name);
+    
     //alert(lat + " " + lng + " (types: " + (typeof lat) + ", " + (typeof lng) + ")")
-    //console.log(response['response']['venues'][i].location.lng);
-   // console.log(response['response']['venues'][i].location.lat);
-    foodcoordinate.push({'lat': lat, 'lng' : lng});
+    console.log(response['response']['venues'][i].location.lng);
+    console.log(response['response']['venues'][i].location.lat);
+  // console.log("titles" + title);
+   
+     foodcoordinate = { 
+      'lat': lat,
+      'lng': lng
+    };
 
        foodmarker = new google.maps.Marker({
                     map: map,
@@ -64,6 +71,8 @@ foodmarker = function(length) {
                      icon: pinSymbol("#FFF"),
                     draggable: true
                 }); 
+
+      //console.log(title);
 
 
    }
@@ -106,10 +115,10 @@ var local = location.location.lat + "," + location.location.lng;
 
    // alert(showlist);
 // foodmaker
- var length = response['response']['venues'];
+ length = response['response']['venues'].length;
     console.log(length);
     var i = 1;
-foodmarker(length);
+foodmarkerdata(response);
 
    
   
