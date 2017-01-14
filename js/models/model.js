@@ -97,7 +97,7 @@ viewModel.filteredLocations = ko.computed(function() {
 var local = location.location.lat + "," + location.location.lng;
  //console.log(local);
             $.ajax({
-    url: "https://api.foursquare.com/v2/venues/search?client_id=KGJSO3R02HH124IYCUAYMJESY0CVOOTDTWWDJKY5ZCVWSPIL&client_secret=HOYZXG51I1NISLFXH5HMEXUFIQUCSLPKN2ZHNB3FROKLT2DS&v=20130815&ll=" + local +"&query=sushi&radius=300",
+    url: "https://api.foursquare.com/v2/venues/search?client_id=KGJSO3R02HH124IYCUAYMJESY0CVOOTDTWWDJKY5ZCVWSPIL&client_secret=HOYZXG51I1NISLFXH5HMEXUFIQUCSLPKN2ZHNB3FROKLT2DS&v=20130815&ll=" + local +"&intent=browse&query=sushi&radius=300",
  
     // The name of the callback parameter, as specified by Media Wiki
    // jsonp: "callback",
@@ -211,8 +211,13 @@ ko.bindingHandlers.map = {
 
         });
                  locations[i].marker = marker;
+                 locations[i].marker.foodmarkers = foodmarker;
+                 alert(locations[i].marker.title);
+
 
             }
+
+             // alert(locations[i].marker.foodmarkers.title);
 
                
             }
