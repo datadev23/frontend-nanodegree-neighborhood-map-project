@@ -16,12 +16,12 @@ var length;
 var foodmarker;
 
  var locations = [
-          {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
-          {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
-          {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759}},
-          {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}},
-          {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934}},
-          {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237}}
+          {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393},color:'#ff1a1a'},
+          {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465},color:'#1a66ff'},
+          {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759},color:'#ffcc00'},
+          {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}, color:'#00e600'},
+          {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934},color:'#ff0066'},
+          {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237},color:'#c61aff'}
         ];
 
 var food = {
@@ -190,6 +190,7 @@ ko.bindingHandlers.map = {
            for(var i=0; i< locations.length; i++) {
            var position = (locations[i].location);
            var title = (locations[i].title);
+           var color = (locations[i].color)
          //  console.log(locations[i].title);
 
 
@@ -197,6 +198,7 @@ ko.bindingHandlers.map = {
                     map: map,
                     position: position,
                     title: title,
+                    icon: pinSymbol(color),
                     draggable: true
                 });    
  //console.log("my responses" + response['response']['venues'][4].location.lat);
