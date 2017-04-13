@@ -72,6 +72,8 @@ foodmarkerdata = function(response) {
                     draggable: true
                 }); 
 
+          viewModel.foodMarkers.push(foodmarker);
+
       //console.log(title);
 
 
@@ -82,6 +84,9 @@ foodmarkerdata = function(response) {
 
 // filter function
  var showlist = true;
+
+viewModel.foodMarkers = ko.observableArray([]);
+
 viewModel.filteredLocations = ko.computed(function() {
     var filter = this.query().toLowerCase();
     if (!filter) {
@@ -94,8 +99,13 @@ viewModel.filteredLocations = ko.computed(function() {
 
                        // add the lat long from the users input and pass it to the foursquare api
 //alert(location);
-var local = location.location.lat + "," + location.location.lng;
+ var title = location.title.toLowerCase();
+      var local = location.location.lat + "," + location.location.lng;
+      var match = title.indexOf(filter) >= 0;
+
+       location.marker.setVisible(match);
  //console.log(local);
+            if(match) {
             $.ajax({
     url: "https://api.foursquare.com/v2/venues/search?client_id=KGJSO3R02HH124IYCUAYMJESY0CVOOTDTWWDJKY5ZCVWSPIL&client_secret=HOYZXG51I1NISLFXH5HMEXUFIQUCSLPKN2ZHNB3FROKLT2DS&v=20130815&ll=" + local +"&intent=browse&query=sushi&radius=300",
  
@@ -127,8 +137,7 @@ foodmarkerdata(response);
          // 
       
         
-            var match = location.title.toLowerCase().indexOf(filter.toLowerCase()) >= 0;
-            location.marker.setVisible(match);
+            }
             return match;
            
         });
@@ -153,7 +162,7 @@ function MyModel() {
 // intitialise function which initialises the binding for MyViewModel
 function initialise() {
 
-  console.log("initialise map");
+  //console.log("initialise map");
 
    // Constructor creates a new map - only center and zoom are required.
         map = new google.maps.Map(document.getElementById('map2Div'), {
@@ -180,7 +189,7 @@ function pinSymbol(color) {
 
 ko.bindingHandlers.map = {
             init: function (element, valueAccessor, allBindingsAccessor, MyViewModel) {
-              console.log("initialise binding");
+              //console.log("initialise binding");
  
       var bounds = new google.maps.LatLngBounds();   
       var largeInfowindow = new google.maps.InfoWindow();   
@@ -214,14 +223,13 @@ ko.bindingHandlers.map = {
         });
                  locations[i].marker = marker;
                  locations[i].marker.foodmarkers = foodmarker;
-                 alert(locations[i].marker.title);
+                 //alert(locations[i].marker.title);
 
 
             }
 
              // alert(locations[i].marker.foodmarkers.title);
-
-               
+ 
             }
         };
 
