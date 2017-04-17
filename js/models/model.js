@@ -46,6 +46,10 @@ query: ko.observable(''),
 //viewModel.query.subscribe(viewModel.search);
 
 foodmarkerdata = function(response) {
+
+  viewModel.foodMarkers().forEach(function(marker) {
+    marker.setMap(null);
+  });
     
      for (i =0; i < length; i++) {
     console.log(i);
