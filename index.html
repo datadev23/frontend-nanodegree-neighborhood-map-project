@@ -6,6 +6,15 @@
      
 </head>
 <body>   
+
+
+<p>
+    Choose some countries you'd like to visit: 
+    <select data-bind="options: availableCountries, selectedOptions: chosenCountries" size="5" multiple="true"></select>
+</p>
+ 
+
+
      <input placeholder="Search…" type="search" name="q" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="on" id="mysearch">
     <div data-bind=""> </div>
 

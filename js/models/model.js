@@ -33,7 +33,8 @@ var viewModel = {
 
 locations: ko.observableArray(locations),
 query: ko.observable(''),
-
+availableCountries : ko.observableArray(['France', 'Germany', 'Spain']),
+        chosenCountries : ko.observableArray(['Germany']), // Initially, only Germany 
 };
 //console.log(locations);
 
@@ -46,10 +47,6 @@ query: ko.observable(''),
 //viewModel.query.subscribe(viewModel.search);
 
 foodmarkerdata = function(response) {
-
-  viewModel.foodMarkers().forEach(function(marker) {
-    marker.setMap(null);
-  });
     
      for (i =0; i < length; i++) {
     console.log(i);
