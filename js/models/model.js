@@ -16,12 +16,12 @@ var length;
 var foodmarker;
 
  var locations = [
-          {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393},color:'#ff1a1a'},
-          {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465},color:'#1a66ff'},
-          {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759},color:'#ffcc00'},
-          {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}, color:'#00e600'},
-          {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934},color:'#ff0066'},
-          {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237},color:'#c61aff'}
+          {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393},category: "Penthouse", color:'#ff1a1a'},
+          {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465},category: "Loft", color:'#1a66ff'},
+          {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759},category: "Entertainment", color:'#ffcc00'},
+          {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}, category: "Entertainment", color:'#00e600'},
+          {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934}, category: "Entertainment", color:'#ff0066'},
+          {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237}, category: "Entertainment", color:'#c61aff'}
         ];
 
 var food = {
@@ -29,12 +29,15 @@ var food = {
 
 }
 
+var section = ['All', 'Entertainment', 'Loft', 'Penthouse']
+
+
 var viewModel = {  
 
 locations: ko.observableArray(locations),
 query: ko.observable(''),
-availableCountries : ko.observableArray(['France', 'Germany', 'Spain']),
-        chosenCountries : ko.observableArray(['Germany']), // Initially, only Germany 
+availableCountries : ko.observableArray(section),
+        chosenCountries : ko.observableArray(['all']), // Initially, only Germany 
 };
 //console.log(locations);
 
@@ -50,7 +53,7 @@ foodmarkerdata = function(response) {
     
      for (i =0; i < length; i++) {
     console.log(i);
-
+    
     var lat = parseFloat(response['response']['venues'][i].location.lat);
     var lng = parseFloat(response['response']['venues'][i].location.lng);
     var title = (response['response']['venues'][i].name);
@@ -85,6 +88,10 @@ foodmarkerdata = function(response) {
 
 // filter function
  var showlist = true;
+
+ console.log(section);
+
+ //console.log(locations.catagory[0]);
 
 viewModel.foodMarkers = ko.observableArray([]);
 
