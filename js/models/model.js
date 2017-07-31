@@ -28,16 +28,17 @@ var food = {
 
 
 }
-
+var locationdata = locations[0].title;
 var section = ['All', 'Entertainment', 'Loft', 'Penthouse']
 
-
+console.log(locationdata);
 var viewModel = {  
 
 locations: ko.observableArray(locations),
 query: ko.observable(''),
-availableCountries : ko.observableArray(section),
-        chosenCountries : ko.observableArray(['all']), // Initially, only Germany 
+availableSections : ko.observableArray(section),
+availablelocations : ko.observableArray(locations),
+        chosenSection : ko.observableArray(['all']), // Initially, only Germany 
 };
 //console.log(locations);
 
@@ -100,6 +101,7 @@ viewModel.filteredLocations = ko.computed(function() {
     if (!filter) {
         // TODO: add loop to set all marker properties to visible **************
         return this.locations();
+
     } else {
         return ko.utils.arrayFilter(this.locations(), function(location) {
           //  console.log("current location outside foursquare lat " + location.location.lat);

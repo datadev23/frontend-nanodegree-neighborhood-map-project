@@ -10,15 +10,25 @@
 
 <p>
     Choose some countries you'd like to visit: 
-    <select data-bind="options: availableCountries, selectedOptions: chosenCountries" size="5" multiple="true"></select>
+    <select data-bind="options: availableSections, selectedOptions:         chosenSection" size="5" multiple="true"></select>
 </p>
- 
+<!--
+    show the different locations
+    <select data-bind="options: availablelocations, selectedLocations:
+    chosenlocations" size="6" multiple="true"></select> 
+ -->
 
-
+<!--
      <input placeholder="Search…" type="search" name="q" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="on" id="mysearch">
     <div data-bind=""> </div>
+ -->
+
+    <select data-bind="options: availableSections, selectedOptions:         chosenSection" size="5" multiple="true"></select>
+
 
     <ul data-bind="template: {name:'location', foreach:filteredLocations}"></ul>
+
+    <select data-bind="options: availableSections, selectedOptions:         chosenSection" size="5" multiple="true"></select>
 
 
 <script type="text/html" id="location">
