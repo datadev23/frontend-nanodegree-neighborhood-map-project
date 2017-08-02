@@ -4,15 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Neighbourhood Map</title>
-
+   <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <link href="bower_components/bootstrap/dist/js/bootstrap.min.js" rel="javascript">
 </head>
 
 <body>
-
-
+<div class="container">
+     <div class="jumbotron">
+        <h1>Neighbourhood Project</h1>
+     </div>
     <p>
-        Choose a main option menu:
-        <select data-bind="options: availableSections, selectedOptions:         chosenSection" size="5" multiple="true"></select>
+
+  
+        Choose a main category
+        <select class="selectpicker" data-bind="options: availableSections, selectedOptions:         chosenSection" size="5" multiple="true"></select>
+
     </p>
     <!--
     show the different locations
@@ -29,12 +35,14 @@
 
 
 
-
+    <h1> List locations </h1>
     <script type="text/html" id="location">
-        <li>
-            <strong data-bind="text: title"></strong> –
+        <ul class="list-group">
+        <li class="list-group-item">
+            <strong data-bind="text: title"></strong> 
 
         </li>
+        </ul>
     </script>
 
  
@@ -53,7 +61,7 @@
     <script src="js/models/model.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByGmOzk27pGJOB23bKr-B5TVg5H0DxuFQ&v=3&callback=initialise">
     </script>
-
+</div>
 </body>
 
 </html>
