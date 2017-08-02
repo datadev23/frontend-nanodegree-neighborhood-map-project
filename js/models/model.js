@@ -73,7 +73,7 @@ var food = {
 
 }
 var locationdata = locations[0].title;
-var section = ['All', 'Entertainment', 'Loft', 'Penthouse']
+var section = ['All', 'Entertainment', 'Loft', 'Penthouse',"shopping"]
 
 console.log(locationdata);
 var viewModel = {
@@ -82,7 +82,7 @@ var viewModel = {
     query: ko.observable(''),
     availableSections: ko.observableArray(section),
     availablelocations: ko.observableArray(locations),
-            chosenSection: ko.observableArray(['all']), // Initially, only Germany 
+            chosenSection: ko.observableArray(['All']), // Initially, only Germany 
 };
 //console.log(locations);
 
@@ -97,15 +97,15 @@ var viewModel = {
 foodmarkerdata = function(response) {
 
     for (i = 0; i < length; i++) {
-        console.log(i);
+        //console.log(i);
 
         var lat = parseFloat(response['response']['venues'][i].location.lat);
         var lng = parseFloat(response['response']['venues'][i].location.lng);
         var title = (response['response']['venues'][i].name);
 
         //alert(lat + " " + lng + " (types: " + (typeof lat) + ", " + (typeof lng) + ")")
-        console.log(response['response']['venues'][i].location.lng);
-        console.log(response['response']['venues'][i].location.lat);
+       // console.log(response['response']['venues'][i].location.lng);
+       // console.log(response['response']['venues'][i].location.lat);
         // console.log("titles" + title);
 
         foodcoordinate = {
@@ -141,8 +141,13 @@ console.log(section);
 viewModel.foodMarkers = ko.observableArray([]);
 
 viewModel.filteredLocations = ko.computed(function() {
+    var chosenSection = this.chosenSection();
     var filter = this.query().toLowerCase();
-    if (!filter) {
+
+    console.log(this.chosenSection());
+    //if (!filter) {
+        console.log(chosenSection[0]);
+        if (chosenSection[0] === "All") {
         // TODO: add loop to set all marker properties to visible **************
         return this.locations();
 
@@ -153,11 +158,14 @@ viewModel.filteredLocations = ko.computed(function() {
 
             // add the lat long from the users input and pass it to the foursquare api
             //alert(location);
+            var category = location.category;
             var title = location.title.toLowerCase();
             var local = location.location.lat + "," + location.location.lng;
-            var match = title.indexOf(filter) >= 0;
-
+            //var match = title.indexOf(filter) >= 0;
+             var match = chosenSection.includes(category); // true or false
+              console.log(match,);
             location.marker.setVisible(match);
+            console.log(category, chosenSection, match)
             //console.log(local);
             if (match) {
                 $.ajax({
