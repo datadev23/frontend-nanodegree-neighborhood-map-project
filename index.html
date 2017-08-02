@@ -1,52 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Neighbourhood Map</title>
-     
+
 </head>
-<body>   
+
+<body>
 
 
-<p>
-    Choose some countries you'd like to visit: 
-    <select data-bind="options: availableSections, selectedOptions:         chosenSection" size="5" multiple="true"></select>
-</p>
-<!--
+    <p>
+        Choose a main option menu:
+        <select data-bind="options: availableSections, selectedOptions:         chosenSection" size="5" multiple="true"></select>
+    </p>
+    <!--
     show the different locations
     <select data-bind="options: availablelocations, selectedLocations:
     chosenlocations" size="6" multiple="true"></select> 
  -->
 
-<!--
+    <!--
      <input placeholder="Search…" type="search" name="q" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="on" id="mysearch">
     <div data-bind=""> </div>
  -->
 
-    <select data-bind="options: availableSections, selectedOptions:         chosenSection" size="5" multiple="true"></select>
-
-
     <ul data-bind="template: {name:'location', foreach:filteredLocations}"></ul>
 
-    <select data-bind="options: availableSections, selectedOptions:         chosenSection" size="5" multiple="true"></select>
 
 
-<script type="text/html" id="location">
-  <li>
-    <strong data-bind="text: title"></strong> –
-  
-  </li>
-</script>
-   
+
+    <script type="text/html" id="location">
+        <li>
+            <strong data-bind="text: title"></strong> –
+
+        </li>
+    </script>
+
+    <select data-bind="options: location, selectedOptions:         chosenSection" size="5" multiple="true"></select>
+
+
+    <select data-bind="foreach: location">
+    <option>Item <span data-bind="text: title"></span></option>
+</select>
+
+
+
+
     <div id="map2Div" data-bind="style:{width:'800px',height:'800px'},map:mapTwo"></div>
-<input data-bind="value: mapTwo().lat" />
-<input data-bind="value: mapTwo().lng" />
-<script src="bower_components/jquery/jquery.js"></script>
- <script src="bower_components/knockout/dist/knockout.js"></script>
-     <script src="js/models/model.js"></script>
-      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByGmOzk27pGJOB23bKr-B5TVg5H0DxuFQ&v=3&callback=initialise">
-   </script>
+    <input data-bind="value: mapTwo().lat" />
+    <input data-bind="value: mapTwo().lng" />
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/knockout/dist/knockout.js"></script>
+    <script src="js/models/model.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByGmOzk27pGJOB23bKr-B5TVg5H0DxuFQ&v=3&callback=initialise">
+    </script>
 
 </body>
+
 </html>
-   -
+-
