@@ -73,7 +73,7 @@ var food = {
 
 }
 var locationdata = locations[0].title;
-var section = ['All', 'Entertainment', 'Loft', 'Penthouse',"shopping"]
+var section = ['All', 'Entertainment', 'Loft', 'Penthouse', "shopping"]
 
 console.log(locationdata);
 var viewModel = {
@@ -104,8 +104,8 @@ foodmarkerdata = function(response) {
         var title = (response['response']['venues'][i].name);
 
         //alert(lat + " " + lng + " (types: " + (typeof lat) + ", " + (typeof lng) + ")")
-       // console.log(response['response']['venues'][i].location.lng);
-       // console.log(response['response']['venues'][i].location.lat);
+        // console.log(response['response']['venues'][i].location.lng);
+        // console.log(response['response']['venues'][i].location.lat);
         // console.log("titles" + title);
 
         foodcoordinate = {
@@ -146,8 +146,8 @@ viewModel.filteredLocations = ko.computed(function() {
 
     console.log(this.chosenSection());
     //if (!filter) {
-        console.log(chosenSection[0]);
-        if (chosenSection[0] === "All") {
+    console.log(chosenSection[0]);
+    if (chosenSection[0] === "All") {
         // TODO: add loop to set all marker properties to visible **************
         return this.locations();
 
@@ -162,8 +162,8 @@ viewModel.filteredLocations = ko.computed(function() {
             var title = location.title.toLowerCase();
             var local = location.location.lat + "," + location.location.lng;
             //var match = title.indexOf(filter) >= 0;
-             var match = chosenSection.includes(category); // true or false
-              console.log(match,);
+            var match = chosenSection.includes(category); // true or false
+            console.log(match, );
             location.marker.setVisible(match);
             console.log(category, chosenSection, match)
             //console.log(local);
