@@ -5,74 +5,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Neighbourhood Map</title>
-   <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-      <link href="bower_components/bootstrap/dist/js/bootstrap.min.js" rel="javascript">
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bower_components/bootstrap/dist/js/bootstrap.min.js" rel="javascript">
+    <link href="css/print.css" rel="stylesheet" media="print">
 </head>
 
 <body>
-<div class="container">
-     <div class="jumbotron">
-        <h1>Neighbourhood Project</h1>
-     </div>
-     <div class="row">
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Neighbourhood Project</h1>
+        </div>
+        <div class="row">
 
-    <div class="col-md-4">
-    <p>
+            <div class="col-md-4">
+                <p>
 
-  
-        <p>Choose a main category</p>
-        <select class="selectpicker" data-bind="options: availableSections, selectedOptions:         chosenSection" size="5" multiple="true"></select>
 
-    </p>
-</div>
-    <!--
+                    <p>Choose a main category</p>
+                    <select class="selectpicker" data-bind="options: availableSections, selectedOptions:         chosenSection" size="5" multiple="true"></select>
+
+                </p>
+            </div>
+            <!--
     show the different locations
     <select data-bind="options: availablelocations, selectedLocations:
     chosenlocations" size="6" multiple="true"></select> 
  -->
 
-    <!--
+            <!--
      <input placeholder="Search…" type="search" name="q" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="on" id="mysearch">
     <div data-bind=""> </div>
  -->
-     <div class="col-md-4">
-    <ul data-bind="template: {name:'location', foreach:filteredLocations}"></ul>
+            <div class="col-md-4">
+                <ul data-bind="template: {name:'location', foreach:filteredLocations}"></ul>
 
 
 
-    <p><h1> List locations </h1><p>
-    <script type="text/html" id="location">
-        <ul class="list-group">
-        <li class="list-group-item">
-            <strong data-bind="text: title"></strong> 
+                <p>
+                    <h1> List locations </h1>
+                    <p>
+                        <script type="text/html" id="location">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <strong data-bind="text: title"></strong>
 
-        </li>
-        </ul>
-    </script>
+                                </li>
+                            </ul>
+                        </script>
+            </div>
+
+
+
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div id="map2Div" data-bind="style:{width:'800px',height:'800px'},map:mapTwo"></div>
+                <input data-bind="value: mapTwo().lat" />
+                <input data-bind="value: mapTwo().lng" />
+                <script src="bower_components/jquery/jquery.js"></script>
+                <script src="bower_components/knockout/dist/knockout.js"></script>
+                <script src="js/models/model.js"></script>
+                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByGmOzk27pGJOB23bKr-B5TVg5H0DxuFQ&v=3&callback=initialise">
+                </script>
+            </div>
+        </div>
     </div>
- 
-
-
-    
-
-
-
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-    <div id="map2Div" data-bind="style:{width:'800px',height:'800px'},map:mapTwo"></div>
-    <input data-bind="value: mapTwo().lat" />
-    <input data-bind="value: mapTwo().lng" />
-    <script src="bower_components/jquery/jquery.js"></script>
-    <script src="bower_components/knockout/dist/knockout.js"></script>
-    <script src="js/models/model.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByGmOzk27pGJOB23bKr-B5TVg5H0DxuFQ&v=3&callback=initialise">
-    </script>
-</div>
-</div>
-</div>
 </body>
 
 </html>
--
