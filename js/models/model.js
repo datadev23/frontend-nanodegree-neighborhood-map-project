@@ -75,6 +75,8 @@ var food = {
 var locationdata = locations[0].title;
 var section = ['All', 'Entertainment', 'Loft', 'Penthouse', "shopping"]
 
+var distance = [100,200,300,400,500];
+
 console.log(locationdata);
 var viewModel = {
 
@@ -82,6 +84,7 @@ var viewModel = {
     query: ko.observable(''),
     availableSections: ko.observableArray(section),
     availablelocations: ko.observableArray(locations),
+    availabledistances: ko.observableArray(distance),
             chosenSection: ko.observableArray(['All']), // Initially, only Germany 
 };
 //console.log(locations);
@@ -103,11 +106,15 @@ foodmarkerdata = function(response) {
         var lng = parseFloat(response['response']['venues'][i].location.lng);
         var title = (response['response']['venues'][i].name);
 
+        .log(response['response']['venues'][i].url);
+
         //alert(lat + " " + lng + " (types: " + (typeof lat) + ", " + (typeof lng) + ")")
         // console.log(response['response']['venues'][i].location.lng);
         // console.log(response['response']['venues'][i].location.lat);
-        // console.log("titles" + title);
+        // console.log("titles" + title); 
 
+        var largeInfowindow = new google.maps.InfoWindow();
+   
         foodcoordinate = {
             'lat': lat,
             'lng': lng
@@ -121,9 +128,19 @@ foodmarkerdata = function(response) {
             draggable: true
         });
 
+             foodmarker.addListener('click', function() {
+                foodMarkerPopulateInfoWindow(this, largeInfowindow);
+               
+
+            });
+
+
+
         viewModel.foodMarkers.push(foodmarker);
 
         //console.log(title);
+
+
 
 
     }
@@ -166,6 +183,7 @@ viewModel.filteredLocations = ko.computed(function() {
             console.log(match, );
             location.marker.setVisible(match);
             console.log(category, chosenSection, match)
+
             //console.log(local);
             if (match) {
                 $.ajax({
@@ -220,6 +238,8 @@ function MyModel() {
 }
 
 
+  
+
 
 // intitialise function which initialises the binding for MyViewModel
 function initialise() {
@@ -234,6 +254,15 @@ function initialise() {
         },
         zoom: 13
     });
+
+    if (google.maps) {
+
+        console.log("google map loaded");
+    }
+    else {
+
+        console.log("google map failed ")
+    }
 
 
     MyModel();
@@ -273,19 +302,35 @@ ko.bindingHandlers.map = {
                 position: position,
                 title: title,
                 icon: pinSymbol(color),
+                animation: google.maps.Animation.DROP,
                 draggable: true
             });
             //console.log("my responses" + response['response']['venues'][4].location.lat);
-
+           
+           //marker.setAnimation(google.maps.Animation.BOUNCE);
 
             markers.push(marker);
             foodmarkers.push(foodmarker);
 
             marker.addListener('click', function() {
                 populateInfoWindow(this, largeInfowindow);
-
+               
 
             });
+
+
+
+
+     
+             
+          
+
+        
+
+
+
+
+
             locations[i].marker = marker;
             locations[i].marker.foodmarkers = foodmarker;
             //alert(locations[i].marker.title);
@@ -301,7 +346,23 @@ ko.bindingHandlers.map = {
 
 var Model = new MyModel();
 
+
+
 function populateInfoWindow(marker, infowindow) {
+    // Check to make sure the infowindow is not already opened on this marker.
+    if (infowindow.marker != marker) {
+        infowindow.marker = marker;
+        infowindow.setContent('<div>' + marker.title + '</div>');
+        infowindow.open(map, marker);
+        // Make sure the marker property is cleared if the infowindow is closed.
+        infowindow.addListener('closeclick', function() {
+            // infowindow.setMarker(null);
+        });
+    }
+}
+
+
+function foodMarkerPopulateInfoWindow(marker, infowindow) {
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
