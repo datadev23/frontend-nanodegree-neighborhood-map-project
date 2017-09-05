@@ -10,6 +10,8 @@ var model = [];
 var map;
 var length;
 
+var phone;
+
 var foodmarker;
 
 var locations = [{
@@ -93,7 +95,6 @@ var viewModel = {
 // get the data from the textbox
 
 
-
 //alert(location);
 //viewModel.query.subscribe(viewModel.search);
 
@@ -105,8 +106,11 @@ foodmarkerdata = function(response) {
         var lat = parseFloat(response['response']['venues'][i].location.lat);
         var lng = parseFloat(response['response']['venues'][i].location.lng);
         var title = (response['response']['venues'][i].name);
+     phone = (response['response']['venues'][i].contact.phone);
 
-        .log(response['response']['venues'][i].url);
+        console.log(phone);
+
+        console.log("distance", distance[i])
 
         //alert(lat + " " + lng + " (types: " + (typeof lat) + ", " + (typeof lng) + ")")
         // console.log(response['response']['venues'][i].location.lng);
@@ -130,9 +134,23 @@ foodmarkerdata = function(response) {
 
              foodmarker.addListener('click', function() {
                 foodMarkerPopulateInfoWindow(this, largeInfowindow);
+                toggleBounce();
                
 
             });
+
+              //foodmarker.addListener('click', toggleBounce);
+
+// https://developers.google.com/maps/documentation/javascript/examples/marker-animations
+
+              function toggleBounce() {
+        if (foodmarker.getAnimation() !== null) {
+          foodmarker.setAnimation(null);
+        } else {
+          foodmarker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+      }
+
 
 
 
@@ -140,7 +158,7 @@ foodmarkerdata = function(response) {
 
         //console.log(title);
 
-
+      
 
 
     }
@@ -183,7 +201,7 @@ viewModel.filteredLocations = ko.computed(function() {
             console.log(match, );
             location.marker.setVisible(match);
             console.log(category, chosenSection, match)
-
+            
             //console.log(local);
             if (match) {
                 $.ajax({
@@ -245,6 +263,8 @@ function MyModel() {
 function initialise() {
 
     //console.log("initialise map");
+    // validate the mpa is
+    validation();
 
     // Constructor creates a new map - only center and zoom are required.
     map = new google.maps.Map(document.getElementById('map2Div'), {
@@ -255,14 +275,7 @@ function initialise() {
         zoom: 13
     });
 
-    if (google.maps) {
-
-        console.log("google map loaded");
-    }
-    else {
-
-        console.log("google map failed ")
-    }
+   
 
 
     MyModel();
@@ -284,6 +297,7 @@ function pinSymbol(color) {
 ko.bindingHandlers.map = {
     init: function(element, valueAccessor, allBindingsAccessor, MyViewModel) {
         //console.log("initialise binding");
+     
 
         var bounds = new google.maps.LatLngBounds();
         var largeInfowindow = new google.maps.InfoWindow();
@@ -362,15 +376,29 @@ function populateInfoWindow(marker, infowindow) {
 }
 
 
-function foodMarkerPopulateInfoWindow(marker, infowindow) {
+function foodMarkerPopulateInfoWindow(foodmarker, infowindow) {
     // Check to make sure the infowindow is not already opened on this marker.
-    if (infowindow.marker != marker) {
-        infowindow.marker = marker;
-        infowindow.setContent('<div>' + marker.title + '</div>');
-        infowindow.open(map, marker);
+    if (infowindow.foodmarker != foodmarker) {
+        infowindow.foodmarker = foodmarker;
+        infowindow.setContent('<div>' + '<p>' + 'name ' + foodmarker.title + '</p>'+  ' phone: ' + phone + '</div>');
+        infowindow.open(map, foodmarker);
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick', function() {
             // infowindow.setMarker(null);
         });
     }
 }
+
+function validation() {
+ if (google.maps) {
+
+        console.log("google map loaded");
+    }
+    else {
+
+        console.log("google map failed ")
+    }
+
+}
+
+
