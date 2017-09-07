@@ -129,12 +129,13 @@ foodmarkerdata = function(response) {
             position: foodcoordinate,
             title: title,
             icon: pinSymbol("#FFF"),
-            draggable: true
+            draggable: true,
+            phone: phone
         });
 
              foodmarker.addListener('click', function() {
                 foodMarkerPopulateInfoWindow(this, largeInfowindow);
-                toggleBounce();
+                toggleBounce(this);
                
 
             });
@@ -143,9 +144,8 @@ foodmarkerdata = function(response) {
 
 // https://developers.google.com/maps/documentation/javascript/examples/marker-animations
 
-              function toggleBounce() {
+              function toggleBounce(foodmarker) {
         if (foodmarker.getAnimation() !== null) {
-          foodmarker.setAnimation(null);
         } else {
           foodmarker.setAnimation(google.maps.Animation.BOUNCE);
         }
@@ -380,7 +380,7 @@ function foodMarkerPopulateInfoWindow(foodmarker, infowindow) {
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.foodmarker != foodmarker) {
         infowindow.foodmarker = foodmarker;
-        infowindow.setContent('<div>' + '<p>' + 'name ' + foodmarker.title + '</p>'+  ' phone: ' + phone + '</div>');
+        infowindow.setContent('<div>' + '<p>' + 'name ' + foodmarker.title + '</p>'+  ' phone: ' + foodmarker.phone + '</div>');
         infowindow.open(map, foodmarker);
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick', function() {
