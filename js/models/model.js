@@ -129,6 +129,7 @@ foodmarkerdata = function(response) {
             position: foodcoordinate,
             title: title,
             icon: pinSymbol("#FFF"),
+            animation: google.maps.Animation.DROP,
             draggable: true,
             phone: phone
         });
