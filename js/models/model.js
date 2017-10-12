@@ -77,7 +77,7 @@ var food = {
 var locationdata = locations[0].title;
 var section = ['All', 'Entertainment', 'Loft', 'Penthouse', "shopping"]
 
-var distance = [100,200,300,400,500];
+//var distance = [100,200,300,400,500];
 
 
 var viewModel = {
