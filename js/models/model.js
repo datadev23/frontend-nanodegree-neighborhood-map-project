@@ -12,6 +12,10 @@ var length;
 
 var phone;
 
+var city;
+
+var address
+
 var foodmarker;
 
 var locations = [{
@@ -97,7 +101,13 @@ var viewModel = {
 //alert(location);
 //viewModel.query.subscribe(viewModel.search);
 
+console.log("test info");
+
+
+
 foodmarkerdata = function(response) {
+
+    console.log("test system");
 
     for (i = 0; i < length; i++) {
         //console.log(i);
@@ -106,8 +116,11 @@ foodmarkerdata = function(response) {
         var lng = parseFloat(response['response']['venues'][i].location.lng);
         var title = (response['response']['venues'][i].name);
      phone = (response['response']['venues'][i].contact.phone);
+     address =  (response['response']['venues'][i].location.address);
+     city = (response['response']['venues'][i].location.city);
 
-        console.log(phone);
+     //console.log(phone)
+
 
       
 
@@ -130,7 +143,10 @@ foodmarkerdata = function(response) {
             icon: pinSymbol("#FFF"),
             animation: google.maps.Animation.DROP,
             draggable: true,
-            phone: phone
+            phone: phone,
+            address: address,
+            city: city
+            
         });
 
              foodmarker.addListener('click', function() {
@@ -170,6 +186,7 @@ foodmarkerdata = function(response) {
 var showlist = true;
 
 console.log(section);
+
 
 //console.log(locations.catagory[0]);
 
@@ -227,6 +244,8 @@ viewModel.filteredLocations = ko.computed(function() {
                         console.log(length);
                         var i = 1;
                         foodmarkerdata(response);
+                       
+                        console.log(response['response']['venues'][i]);
 
 
 
@@ -256,7 +275,7 @@ function MyModel() {
 }
 
 
-  
+  //console.log(data);
 
 
 // intitialise function which initialises the binding for MyViewModel
@@ -376,11 +395,14 @@ function populateInfoWindow(marker, infowindow) {
 }
 
 
+
 function foodMarkerPopulateInfoWindow(foodmarker, infowindow) {
+
+    //console.log(foodmarker.phone);
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.foodmarker != foodmarker) {
         infowindow.foodmarker = foodmarker;
-        infowindow.setContent('<div>' + '<p>' + 'name ' + foodmarker.title + '</p>'+  ' phone: ' + foodmarker.phone + '</div>');
+        infowindow.setContent('<div>' + '<p>' + 'name ' + foodmarker.title + '</p>'+   '<p>' +  'phone: ' + foodmarker.phone + ' </p>' + '<p> address: ' +  foodmarker.address + '</p>' + '<p> city: ' + foodmarker.city + '</p>' + '</div>');
         infowindow.open(map, foodmarker);
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick', function() {
