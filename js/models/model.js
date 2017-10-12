@@ -79,7 +79,7 @@ var section = ['All', 'Entertainment', 'Loft', 'Penthouse', "shopping"]
 
 var distance = [100,200,300,400,500];
 
-console.log(locationdata);
+
 var viewModel = {
 
     locations: ko.observableArray(locations),
@@ -110,7 +110,7 @@ foodmarkerdata = function(response) {
 
         console.log(phone);
 
-        console.log("distance", distance[i])
+      
 
         //alert(lat + " " + lng + " (types: " + (typeof lat) + ", " + (typeof lng) + ")")
         // console.log(response['response']['venues'][i].location.lng);
