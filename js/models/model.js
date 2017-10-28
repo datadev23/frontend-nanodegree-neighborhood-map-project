@@ -90,16 +90,9 @@ var viewModel = {
     query: ko.observable(''),
     availableSections: ko.observableArray(section),
     availablelocations: ko.observableArray(locations),
-            chosenSection: ko.observableArray(['All']), // Initially, only Germany 
+            chosenSection: ko.observableArray(['All']), //All catagories
 };
-//console.log(locations);
 
-
-// get the data from the textbox
-
-
-//alert(location);
-//viewModel.query.subscribe(viewModel.search);
 
 console.log("test info");
 
@@ -119,15 +112,7 @@ foodmarkerdata = function(response) {
      address =  (response['response']['venues'][i].location.address);
      city = (response['response']['venues'][i].location.city);
 
-     //console.log(phone)
-
-
-      
-
-        //alert(lat + " " + lng + " (types: " + (typeof lat) + ", " + (typeof lng) + ")")
-        // console.log(response['response']['venues'][i].location.lng);
-        // console.log(response['response']['venues'][i].location.lat);
-        // console.log("titles" + title); 
+    
 
         var largeInfowindow = new google.maps.InfoWindow();
    
@@ -156,9 +141,7 @@ foodmarkerdata = function(response) {
 
             });
 
-              //foodmarker.addListener('click', toggleBounce);
-
-// https://developers.google.com/maps/documentation/javascript/examples/marker-animations
+ 
 
               function toggleBounce(foodmarker) {
         if (foodmarker.getAnimation() !== null) {
@@ -172,7 +155,7 @@ foodmarkerdata = function(response) {
 
         viewModel.foodMarkers.push(foodmarker);
 
-        //console.log(title);
+     
 
       
 
@@ -281,7 +264,6 @@ function MyModel() {
 // intitialise function which initialises the binding for MyViewModel
 function initialise() {
 
-    //console.log("initialise map");
     // validate the mpa is
     validation();
 
@@ -366,12 +348,12 @@ ko.bindingHandlers.map = {
 
             locations[i].marker = marker;
             locations[i].marker.foodmarkers = foodmarker;
-            //alert(locations[i].marker.title);
+            
 
 
         }
 
-        // alert(locations[i].marker.foodmarkers.title);
+        
 
     }
 };
